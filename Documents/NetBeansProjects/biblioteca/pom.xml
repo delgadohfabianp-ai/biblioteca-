@@ -25,7 +25,32 @@
     <artifactId>mysql-connector-j</artifactId>
     <version>9.4.0</version>
 </dependency>
+<dependency>
+    <!-- API de Servlets (Jakarta EE 10) -->
+   
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>6.0.0</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <!-- API JSP para Jakarta EE 10 -->
+    <dependency>
+        <groupId>jakarta.servlet.jsp</groupId>
+        <artifactId>jakarta.servlet.jsp-api</artifactId>
+        <version>3.0.0</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <!-- JSTL (Jakarta Standard Tag Library) -->
+    <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+    
     </dependencies>
+    
     
     <build>
         <plugins>

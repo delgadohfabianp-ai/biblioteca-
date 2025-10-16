@@ -18,7 +18,7 @@ public class ConexionDao {
     private static final String USER = "root"; // Puede variar si usas Docker o XAMPP
     private static final String PASS = "cena2025."; // Contraseña de ejemplo en el video
 
-    // 2. Método para obtener la conexión
+    // Método para obtener la conexión
     public static Connection obtenerConexion() {
         Connection con = null;
         try {

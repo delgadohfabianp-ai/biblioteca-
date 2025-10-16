@@ -17,56 +17,163 @@ import java.util.ArrayList;
 
 
 public class LibroDao {
-    // Declaración de variables de instancia
+    // declaración de variables
     private Connection conn = null;
-    private PreparedStatement stmt = null; 
-    private ResultSet rs = null; 
-    private ArrayList<Libro> lb;
-
-    /**
-     * Se crea un nuevo método que permite listar todos los libros registrados en la tabla libro.
-     * @return Una lista de objetos Libro.
-     */
-    public ArrayList<Libro> ListarTodosLibros() {
-        
-
-        try {
-            // Obtener la conexión
-            conn = ConexionDao.ObtenerConexion(); 
-            String sql = "SELECT * FROM  libro";
+    private PreparedStatement stmt = null;
+    private ResultSet rs = null;
+    
+    // se crea un nuevo metodo que permita listar todos los libros registrados en la tabla libro
+    public ArrayList<Libro> ListarTodosLibros(){
+        ArrayList<Libro> lb = new ArrayList<>();
+        try{
+            conn = ConexionDao.ObtenerConexion();
+            String sql = "SELECT * FROM libro";
             stmt = conn.prepareStatement(sql);
-            
-            
-
-            // Preparar la sentencia
-            stmt = conn.prepareStatement(sql); 
-
-            // Ejecutar la consulta y obtener el resultado
-            rs = stmt.executeQuery(); 
-
-            // usamos ciclo 
-            while (rs.next()) {
-                Libro libro = new Libro(); 
-                libro.setId(rs.getInt("id_Libro"));  
-                libro.setITitulo(rs.getString("titulo")); 
-                 libro.setITitulo(rs.getString("autor"));
-                  libro.setIPrecio(rs.getString("precio"));
-                   libro.setITitulo(rs.getString("titulo"));
-                   lb.add (libro); }
-               
-        } catch (SQLException e) {
-        } finally {
-            // CERRAR RECURSOS (Es el código que faltaba y es crucial)
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                // Manejo de error al cerrar la conexión
-
+            rs = stmt.executeQuery();
+            //usamos un ciclo
+            while(rs.next()){
+                Libro libro = new Libro();
+                libro.setId(rs.getInt("id_libro"));
+                libro.setTitulo(rs.getString("titulo"));
+                libro.setAutor(rs.getString("autor"));
+                libro.setPrecio(rs.getFloat("precio"));
+                lb.add(libro);
+            }
+        }catch(SQLException e){
+        }finally{
+            try{
+                if(conn !=null){
+                    conn.close();
+                }
+                if(rs !=null){
+                    rs.close();
+                }
+                if(stmt !=null){
+                    stmt.close();
+                }
+            }catch(SQLException e){
             }
         }
         return lb;
+    }
+    
+    // creamos un nuevo metodo este metodo va retornar valor
+    public int RegistrarNuevoLibro(Libro lib){
+        int result = 0;
+        try{
+             conn = ConexionDao.ObtenerConexion();
+             String sql="INSERT INTO libro(titulo,autor,precio) values(?,?,?);";
+             stmt = conn.prepareStatement(sql);
+             stmt.setString(1, lib.getTitulo());
+             stmt.setString(2,lib.getAutor());
+             stmt.setFloat(3, lib.getPrecio());
+             result =stmt.executeUpdate(); // si se inserto correctamente nos retorna un valor mayor a 0 
+        }catch(SQLException e){
+        }finally{
+            try{
+                if(conn !=null){
+                    conn.close();
+                }
+                
+                if(stmt !=null){
+                    stmt.close();
+                }
+            }catch(SQLException e){
+            }
+        }
+        return result;
+    }
+    
+    //Metodo para Editar los datos del libro
+     public int EditarNuevoLibro(Libro lib){
+        int result = 0;
+        try{
+             conn = ConexionDao.ObtenerConexion();
+             String sql="UPDATE libro SET titulo =?,autor=?,precio=? WHERE id_libro=? ;";
+             stmt = conn.prepareStatement(sql);
+             stmt.setString(1, lib.getTitulo());
+             stmt.setString(2,lib.getAutor());
+             stmt.setFloat(3, lib.getPrecio());
+             stmt.setInt(4, lib.getId());
+             result =stmt.executeUpdate(); // si se inserto correctamente nos retorna un valor mayor a 0 
+        }catch(SQLException e){
+        }finally{
+            try{
+                if(conn !=null){
+                    conn.close();
+                }
+                
+                if(stmt !=null){
+                    stmt.close();
+                }
+            }catch(SQLException e){
+            }
+        }
+        return result;
+    }
+    // se crea un nuevo metodo para eliminar un libro
+      public int EliminarLibro(int id){
+        int result = 0;
+        try{
+             conn = ConexionDao.ObtenerConexion();
+             String sql="DELETE  FROM libro WHERE id_libro=?";
+             stmt = conn.prepareStatement(sql);
+             stmt.setInt(1, id);
+             result =stmt.executeUpdate();  
+        }catch(SQLException e){
+        }finally{
+            try{
+                if(conn !=null){
+                    conn.close();
+                }
+                
+                if(stmt !=null){
+                    stmt.close();
+                }
+            }catch(SQLException e){
+            }
+        }
+        return result;
+    }
+   // vamos a crear un metodo que nos ayude a buscar por Id
+     public Libro BuscarPorIdLibro(int id){
+         // lo inicializamos en vacio
+        Libro lib = null;
+        try{
+            conn = ConexionDao.ObtenerConexion();
+            String sql = "SELECT * FROM libro WHERE id_libro=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            //usamos un ciclo
+            if(rs.next()){
+                lib = new Libro();
+                lib.setId(rs.getInt("id_libro"));
+                lib.setTitulo(rs.getString("titulo"));
+                lib.setAutor(rs.getString("autor"));
+                lib.setPrecio(rs.getFloat("precio"));
+                
+            }
+        }catch(SQLException e){
+        }finally{
+            try{
+                if(conn !=null){
+                    conn.close();
+                }
+                if(rs !=null){
+                    rs.close();
+                }
+                if(stmt !=null){
+                    stmt.close();
+                }
+            }catch(SQLException e){
+            }
+        }
+        return lib;
+    }
+
+    public Object vistarTodosLibros() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
      
