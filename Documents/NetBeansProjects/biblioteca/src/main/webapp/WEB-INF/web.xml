@@ -4,9 +4,17 @@
         <servlet-name>LibroControlador</servlet-name>
         <servlet-class>com.mycompany.biblioteca.controlador.LibroControlador</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LibroControladro</servlet-name>
+        <servlet-class>LibroControladro</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LibroControlador</servlet-name>
         <url-pattern>/LibroControlador</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LibroControladro</servlet-name>
+        <url-pattern>/LibroControladro</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
