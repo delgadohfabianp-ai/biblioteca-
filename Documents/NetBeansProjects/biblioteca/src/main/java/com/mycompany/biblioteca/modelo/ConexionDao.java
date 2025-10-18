@@ -13,49 +13,53 @@ import java.sql.SQLException;
  * @author Usuario
  */
 public class ConexionDao {
-    // 1. Declaración de variables de conexión
-    private static final String URL = "jdbc:mysql://localhost:3306/libreria";
-    private static final String USER = "root"; // Puede variar si usas Docker o XAMPP
-    private static final String PASS = "cena2025."; // Contraseña de ejemplo en el video
+
+    // Datos de conexión a la base de datos
+    public static final String URL = "jdbc:mysql://localhost:3306/libreria";
+    public static final String USERNAME = "root";
+    public static final String PASSWORD = "Sena2025..";
 
     // Método para obtener la conexión
     public static Connection obtenerConexion() {
-        Connection con = null;
+        Connection conn = null;
         try {
-            // Cargar el driver JDBC
-            Class.forName("com.mysql.cj.jdbc.Driver"); 
-            
-            // Establecer la conexión
-            con = DriverManager.getConnection(URL, USER, PASS);
-            
-        } catch (ClassNotFoundException e) {
-            System.out.println("Error al cargar el driver: " + e.getMessage());
-        } catch (SQLException e) {
-            System.out.println("Error de conexión: " + e.getMessage());
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("✅ Conexión exitosa a la base de datos.");
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("❌ Error al conectar: " + e.getMessage());
         }
-        return con;
+        return conn;
     }
+
+    // Método main para probar la conexión (esto permite hacer "Run File")
     public static void main(String[] args) {
-    try {
-        Connection conn = ConexionDao.obtenerConexion(); // Llama al método de conexión
-        
+        Connection conn = obtenerConexion();
         if (conn != null) {
-            System.out.println("Conexion a la base de datos es exitosa");
-        } else {
-            System.out.println("No se pudo establecer la conexion a la base de datos");
+            try {
+                conn.close();
+                System.out.println("🔒 Conexión cerrada correctamente.");
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar la conexión: " + e.getMessage());
+            }
         }
-    } catch (Exception e) {
-        System.out.println("Error: " + e.getMessage());}
     }
 
     static Connection ObtenerConexion() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    }
+}
+    
+    
+    
+   
+              
+  
+                    
+    
+    
+    
+    
+    
     
 
-    
-
-
-
-    

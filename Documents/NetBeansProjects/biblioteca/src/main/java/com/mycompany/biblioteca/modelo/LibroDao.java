@@ -12,12 +12,11 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Usuario
+ * @author fabian
  */
-
-
 public class LibroDao {
-    // declaración de variables
+    
+      // declaración de variables
     private Connection conn = null;
     private PreparedStatement stmt = null;
     private ResultSet rs = null;
@@ -171,9 +170,10 @@ public class LibroDao {
         }
         return lib;
     }
+    
+        }
+            
+        
 
-    public Object vistarTodosLibros() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-}
-     
+    
+
